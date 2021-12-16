@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/select_game_image"
-        android:layout_width="386dp"
-        android:layout_height="81dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
-        android:src="@drawable/ps4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
+        android:src="@drawable/add_image_game" />
 
     <EditText
        android:id="@+id/game_name"

@@ -17,7 +17,7 @@
         />
 
     <EditText
-        android:id="@+id/login_phone_number_input"
+        android:id="@+id/login_username_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_applogo"
@@ -25,8 +25,8 @@
         android:padding="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:hint="Numbero di Telefono"
-        android:inputType="number"
+        android:hint="Username"
+        android:inputType="textAutoComplete"
         android:textColor="@color/design_default_color_primary_dark"
         android:textColorHint="@color/design_default_color_primary_dark"
         android:textSize="17sp"
@@ -37,7 +37,7 @@
         android:id="@+id/login_password_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_phone_number_input"
+        android:layout_below="@+id/login_username_input"
         android:background="@drawable/input_design"
         android:padding="20dp"
         android:layout_marginLeft="15dp"

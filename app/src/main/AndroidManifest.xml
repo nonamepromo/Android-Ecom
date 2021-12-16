@@ -10,6 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustPlay">
         <activity
+            android:name=".SearchGamesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminUserGamesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminNewOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GameDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"

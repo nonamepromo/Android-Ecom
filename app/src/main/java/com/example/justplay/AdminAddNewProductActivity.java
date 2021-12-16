@@ -29,6 +29,7 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AdminAddNewProductActivity extends AppCompatActivity {
 
@@ -113,7 +114,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calendar.getTime());
 
         //PER CREARE UNA RANDOM KEY UNICA
-        productRandomKey = saveCurrentDate + saveCurrentTime;
+        productRandomKey = UUID.randomUUID().toString();
 
         final StorageReference filePath = productImageRef.child(imageUri.getLastPathSegment() + productRandomKey + ".png");
         

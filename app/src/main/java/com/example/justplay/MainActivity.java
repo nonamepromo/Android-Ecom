@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String UserPhoneKey = Paper.book().read(Prevalent.UserPhoneKey);
+        String UserUsernameKey = Paper.book().read(Prevalent.UserUsernameKey);
         String UserPasswordKey = Paper.book().read(Prevalent.UserPasswordKey);
 
-        if(UserPhoneKey != "" && UserPasswordKey != ""){
-            if(!TextUtils.isEmpty(UserPhoneKey) && !TextUtils.isEmpty(UserPasswordKey)){
-                AllowAccess(UserPhoneKey, UserPasswordKey);
+        if(UserUsernameKey != "" && UserPasswordKey != ""){
+            if(!TextUtils.isEmpty(UserUsernameKey) && !TextUtils.isEmpty(UserPasswordKey)){
+                AllowAccess(UserUsernameKey, UserPasswordKey);
 
                 loadingBar.setTitle("Login già effettuato");
                 loadingBar.setMessage("Per favore attendi");
@@ -70,22 +70,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void AllowAccess(final String phone, final String password) {
+    private void AllowAccess(final String username, final String password) {
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance(firebaseUrl).getReference();
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(parentDbName).child(phone).exists()){
-                    Users usersData = snapshot.child(parentDbName).child(phone).getValue(Users.class);
+                if(snapshot.child(parentDbName).child(username).exists()){
+                    Users usersData = snapshot.child(parentDbName).child(username).getValue(Users.class);
 
-                    if(usersData.getPhone().equals(phone)){
+                    if(usersData.getUsername().equals(username)){
                         if(usersData.getPassword().equals(password)){
                             Toast.makeText(MainActivity.this, "Login effettuato con successo", Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
 
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            //QUESTO RISOLVE IL PROBLEMA CHE QUANDO SI SELEZIONAVA "RICORDATI DI ME", AL SECONDO ACCESSO ALL'APP
+                            //L'APPLICAZIONE CRASHAVA PERCHE' NON RIUSCIVA A PRENDERSI L'USERNAME DELL'UTENTE LOGGATO DA FAR VISUALIZZARE NELLA TOOLBAR
+                            Prevalent.currentOnlineUser = usersData;
                             startActivity(intent);
                         }else {
                             Toast.makeText(MainActivity.this, "Password Errata", Toast.LENGTH_SHORT).show();
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }else {
-                    Toast.makeText(MainActivity.this, "L'account con questo " + phone + " numero non esiste", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "L'account con questo username: " + username + " non esiste", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }

@@ -26,7 +26,7 @@ import io.paperdb.Paper;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText InputPhoneNumber, InputPassword;
+    private EditText InputUsername, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
     private TextView AdminLink, NotAdminLink;
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginButton = (Button) findViewById(R.id.login_btn);
         InputPassword = (EditText) findViewById(R.id.login_password_input);
-        InputPhoneNumber = (EditText) findViewById(R.id.login_phone_number_input);
+        InputUsername = (EditText) findViewById(R.id.login_username_input);
         AdminLink = (TextView) findViewById(R.id.admin_panel_link);
         NotAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
         loadingBar = new ProgressDialog(this);
@@ -80,11 +80,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        String phone = InputPhoneNumber.getText().toString();
+        String username = InputUsername.getText().toString();
         String password = InputPassword.getText().toString();
         
-        if(TextUtils.isEmpty(phone)){
-            Toast.makeText(this, "Per favore inserisci il tuo numero di cellulare", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(username)){
+            Toast.makeText(this, "Per favore inserisci il tuo username", Toast.LENGTH_SHORT).show();
         } else if(TextUtils.isEmpty(password)){
             Toast.makeText(this, "Per favore inserisci la password", Toast.LENGTH_SHORT).show();
         } else{
@@ -93,26 +93,26 @@ public class LoginActivity extends AppCompatActivity {
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
-            AllowAccessToAccount(phone, password);
+            AllowAccessToAccount(username, password);
         }
     }
 
-    private void AllowAccessToAccount(String phone, String password) {
+    private void AllowAccessToAccount(String username, String password) {
         if(chkBoxRememberMe.isChecked()){
-            Paper.book().write(Prevalent.UserPhoneKey, phone);
+            Paper.book().write(Prevalent.UserUsernameKey, username);
             Paper.book().write(Prevalent.UserPasswordKey, password);
         }
 
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance(firebaseUrl).getReference();
+        final DatabaseReference rootRef;
+        rootRef = FirebaseDatabase.getInstance(firebaseUrl).getReference();
 
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child(parentDbName).child(phone).exists()){
-                    Users usersData = snapshot.child(parentDbName).child(phone).getValue(Users.class);
+                if(snapshot.child(parentDbName).child(username).exists()){
+                    Users usersData = snapshot.child(parentDbName).child(username).getValue(Users.class);
 
-                    if(usersData.getPhone().equals(phone)){
+                    if(usersData.getUsername().equals(username)){
                         if(usersData.getPassword().equals(password)){
                             if(parentDbName.equals("Admins")){
                                 Toast.makeText(LoginActivity.this, "Benvenuto Admin, hai effettuato il login con successo", Toast.LENGTH_SHORT).show();
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 }else {
-                    Toast.makeText(LoginActivity.this, "L'account con questo " + phone + " numero non esiste", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "L'account con questo username: " + username + " non esiste", Toast.LENGTH_SHORT).show();
                     loadingBar.dismiss();
                 }
             }

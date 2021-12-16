@@ -1,16 +1,17 @@
 package com.example.justplay.Model;
 
 public class Users {
-    private String name, phone, password;
+    private String name, phone, password, username;
 
     public Users(){
 
     }
 
-    public Users(String name, String phone, String password) {
+    public Users(String name, String phone, String password, String username) {
         this.name = name;
         this.phone = phone;
         this.password = password;
+        this.username = username;
     }
 
     public String getName() {
@@ -35,5 +36,13 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
