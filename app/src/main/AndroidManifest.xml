@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustPlay">
         <activity
+            android:name=".AdminEditGameActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchGamesActivity"
             android:exported="false" />
         <activity

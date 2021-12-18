@@ -15,7 +15,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
     private ImageView xboxone;
     private ImageView xboxseriesx;
 
-    private Button logoutButton, checkOrdersButton;
+    private Button logoutButton, checkOrdersButton, editGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,16 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
         logoutButton = (Button) findViewById(R.id.admin_logout_btn);
         checkOrdersButton = (Button) findViewById(R.id.check_order_btn);
+        editGame = (Button) findViewById(R.id.edit_game);
+
+        editGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminCategoryActivity.this, HomeActivity.class);
+                intent.putExtra("Admin","Admin");
+                startActivity(intent);
+            }
+        });
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override

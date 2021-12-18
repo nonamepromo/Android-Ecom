@@ -26,12 +26,12 @@
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_marginTop="45dp">
+        android:layout_marginTop="40dp">
 
         <ImageView
             android:id="@+id/ps4"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:src="@drawable/ps4"/>
     </LinearLayout>
 
@@ -43,12 +43,12 @@
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_marginTop="45dp">
+        android:layout_marginTop="40dp">
 
         <ImageView
             android:id="@+id/ps5"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:src="@drawable/ps5"/>
     </LinearLayout>
 
@@ -62,12 +62,12 @@
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_marginTop="45dp">
+        android:layout_marginTop="40dp">
 
         <ImageView
             android:id="@+id/xboxone"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:src="@drawable/xboxone"/>
     </LinearLayout>
 
@@ -81,14 +81,29 @@
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:layout_marginTop="45dp">
+        android:layout_marginTop="40dp">
 
         <ImageView
             android:id="@+id/xboxseriesx"
             android:layout_width="wrap_content"
-            android:layout_height="80dp"
-            android:src="@drawable/xboxseriesx"/>
+            android:layout_height="70dp"
+            android:src="@drawable/xboxseriesx" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/check_order_btn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="Modifica videogioco"
+        android:textColor="@color/white"
+        android:background="@drawable/buttons"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/check_order_btn"

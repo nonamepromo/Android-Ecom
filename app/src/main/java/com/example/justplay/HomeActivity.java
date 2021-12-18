@@ -42,11 +42,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     RecyclerView.LayoutManager layoutManager;
 
+    private String role = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null){
+            role = getIntent().getExtras().get("Admin").toString();
+        }
 
         gamesRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Videogames");
 
@@ -61,8 +68,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-                startActivity(intent);
+                if (!role.equals("Admin")){
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -81,7 +90,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView usernameTextview = headerView.findViewById(R.id.user_profile_name);
         CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
-        usernameTextview.setText(Prevalent.currentOnlineUser.getName());
+        if (!role.equals("Admin")) {
+            usernameTextview.setText(Prevalent.currentOnlineUser.getName());
+        }
 
         recyclerView = findViewById(R.id.recycler_menu);
         recyclerView.setHasFixedSize(true);
@@ -105,13 +116,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 gameViewHolder.gamePrice.setText("Prezzo = " + model.getPrice() + "€");
                 //LIBRERIA PER IMMAGINI
                 Picasso.get().load(model.getImage()).into(gameViewHolder.imageView);
-
                 gameViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(HomeActivity.this, GameDetailsActivity.class);
-                        intent.putExtra("gId", model.getGid());
-                        startActivity(intent);
+                        if (role.equals("Admin")){
+                            Intent intent = new Intent(HomeActivity.this, AdminEditGameActivity.class);
+                            intent.putExtra("gId", model.getGid());
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent(HomeActivity.this, GameDetailsActivity.class);
+                            intent.putExtra("gId", model.getGid());
+                            startActivity(intent);
+                        }
                     }
                 });
             }
@@ -156,25 +172,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.nav_cart){
-            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-            startActivity(intent);
+            if (!role.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
         } else  if (id == R.id.nav_console){
 
         } else  if (id == R.id.nav_search){
-            Intent intent = new Intent(HomeActivity.this, SearchGamesActivity.class);
-            startActivity(intent);
+            if (!role.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, SearchGamesActivity.class);
+                startActivity(intent);
+            }
         } else  if (id == R.id.nav_settings){
-            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(intent);
+            if (!role.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
         }else  if (id == R.id.nav_logout){
-            Paper.book().destroy();
+            if (!role.equals("Admin")) {
+                Paper.book().destroy();
 
-            Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
         }
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
