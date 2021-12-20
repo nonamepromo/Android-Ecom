@@ -8,7 +8,7 @@
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
     app:cardElevation="15dp"
-    tools:context=".AdminEditGameActivity">
+    tools:context=".Admin.AdminEditGameActivity">
 
      <ImageView
         android:id="@+id/edit_game_image"
@@ -76,14 +76,13 @@
 
     <Button
         android:id="@+id/delete_game"
-        android:layout_width="match_parent"
+        android:layout_width="223dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/edit_apply_changes"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginRight="45dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/buttons"
         android:padding="17dp"
         android:text="Elimina Videogioco"

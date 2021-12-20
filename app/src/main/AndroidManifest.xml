@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustPlay">
         <activity
-            android:name=".AdminEditGameActivity"
+            android:name=".Admin.AdminEditGameActivity"
             android:exported="false" />
         <activity
             android:name=".SearchGamesActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminUserGamesActivity"
+            android:name=".Admin.AdminUserGamesActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminNewOrdersActivity"
+            android:name=".Admin.AdminNewOrdersActivity"
             android:exported="false" />
         <activity
             android:name=".OrderActivity"
@@ -39,10 +39,10 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.JustPlay.NoActionBar" />
         <activity
-            android:name=".AdminCategoryActivity"
+            android:name=".Admin.AdminCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminAddNewProductActivity"
+            android:name=".Admin.AdminAddNewProductActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

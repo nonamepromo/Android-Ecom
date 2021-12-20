@@ -1,4 +1,4 @@
-package com.example.justplay;
+package com.example.justplay.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.justplay.HomeActivity;
+import com.example.justplay.MainActivity;
+import com.example.justplay.R;
 
 public class AdminCategoryActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.justplay;
+package com.example.justplay.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.justplay.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -69,6 +70,9 @@ public class AdminEditGameActivity extends AppCompatActivity {
         gamesRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                Intent intent = new Intent(AdminEditGameActivity.this, AdminEditGameActivity.class);
+                startActivity(intent);
+                finish();
                 Toast.makeText(AdminEditGameActivity.this, "Videogioco eliminato con successo", Toast.LENGTH_SHORT).show();
             }
         });
