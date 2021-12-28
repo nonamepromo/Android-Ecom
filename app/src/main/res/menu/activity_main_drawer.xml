@@ -10,11 +10,6 @@
             android:title="Carrello"
             android:iconTint="@color/white"/>
         <item
-            android:id="@+id/nav_console"
-            android:icon="@drawable/console"
-            android:title="Console"
-            android:iconTint="@color/white"/>
-        <item
             android:id="@+id/nav_search"
             android:icon="@drawable/magnifier"
             android:title="Search"

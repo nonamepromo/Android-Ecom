@@ -177,8 +177,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(HomeActivity.this, CartActivity.class);
                 startActivity(intent);
             }
-        } else  if (id == R.id.nav_console){
-
         } else  if (id == R.id.nav_search){
             if (!role.equals("Admin")) {
                 Intent intent = new Intent(HomeActivity.this, SearchGamesActivity.class);
