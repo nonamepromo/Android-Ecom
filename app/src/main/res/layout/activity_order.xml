@@ -22,40 +22,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/txt"
-        android:layout_marginTop="60dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="60dp"
         android:layout_marginRight="20dp"
-        android:hint="Il tuo nome"/>
+        android:hint="Il tuo nome"
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/shipment_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/shipment_name"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:hint="Il tuo numero di telefono"/>
+        android:hint="Il tuo numero di telefono"
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/shipment_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/shipment_phone"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:hint="Il tuo indirizzo"/>
+        android:hint="Il tuo indirizzo"
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/shipment_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/shipment_address"
-        android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:hint="Il la tua città"/>
+        android:hint="La tua città"
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/confirm_order_btn"

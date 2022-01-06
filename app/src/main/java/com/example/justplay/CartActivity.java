@@ -35,7 +35,6 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Button nextProcessBtn;
     private TextView totalAmount, confirmOrderMessage;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     private int grandTotal = 0;
 
     @Override
@@ -70,7 +69,7 @@ public class CartActivity extends AppCompatActivity {
 
         checkOrder();
 
-        final DatabaseReference cartRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Cart List");
+        final DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
         FirebaseRecyclerOptions<Cart> options = new FirebaseRecyclerOptions.Builder<Cart>()
                 .setQuery(cartRef.child("User View")
@@ -139,7 +138,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void checkOrder(){
         DatabaseReference ordersRef;
-        ordersRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
 
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override

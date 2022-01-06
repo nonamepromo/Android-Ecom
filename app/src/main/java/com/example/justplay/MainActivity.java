@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
 
     private String parentDbName = "Users";
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void AllowAccess(final String username, final String password) {
         final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance(firebaseUrl).getReference();
+        RootRef = FirebaseDatabase.getInstance().getReference();
 
         RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

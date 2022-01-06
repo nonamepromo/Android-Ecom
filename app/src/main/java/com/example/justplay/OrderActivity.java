@@ -1,6 +1,7 @@
 package com.example.justplay;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,19 +15,24 @@ import android.widget.Toast;
 import com.example.justplay.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
 
     private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
     private Button confirmOrder;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     private String totalAmount = "";
 
     @Override
@@ -43,12 +49,36 @@ public class OrderActivity extends AppCompatActivity {
         addressEditText = (EditText) findViewById(R.id.shipment_address);
         cityEditText = (EditText) findViewById(R.id.shipment_city);
 
+        Places.initialize(getApplicationContext(),"AIzaSyB_qaMUWfiUBQfxV4jJ2Q71RAQJWW6jOLY");
+        addressEditText.setFocusable(false);
+        addressEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(OrderActivity.this);
+                startActivityForResult(intent,100);
+            }
+        });
+
         confirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 check();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            addressEditText.setText(place.getAddress());
+            cityEditText.setText(place.getName());
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR){
+            Toast.makeText(getApplicationContext(), "Si è presentato un errore, ritenta più tardi", Toast.LENGTH_SHORT).show();
+        }
+        
     }
 
     private void check() {
@@ -75,7 +105,7 @@ public class OrderActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        final DatabaseReference ordersRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
+        final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
 
         HashMap<String, Object> ordersMap = new HashMap<>();
         ordersMap.put("totalAmount", totalAmount);
@@ -93,7 +123,7 @@ public class OrderActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     //UNA VOLTA COMPLETATO L'ORDINE IL CARRELLO VA SVUOTATO, QUINDI IN CART LIST MI PRENDO LA USER VIEW CON
                     // IL NUMERO UGUALE A QUELLO DELL'UTENTE LOGGATO CHE STA CONFERMANDO L'ORDINE (PER QUESTO SI USA LA REMOVE)
-                    FirebaseDatabase.getInstance(firebaseUrl).getReference()
+                    FirebaseDatabase.getInstance().getReference()
                             .child("Cart List").child("User View")
                             .child(Prevalent.currentOnlineUser.getUsername())
                             .removeValue()

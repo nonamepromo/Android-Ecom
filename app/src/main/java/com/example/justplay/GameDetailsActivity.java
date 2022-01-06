@@ -31,7 +31,6 @@ public class GameDetailsActivity extends AppCompatActivity {
     private Button addToCartButton;
     private android.widget.ImageView gameImage;
     private TextView gamePrice, gameDescription, gameTitle, gameConsole;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     private String gameId = "", state = "Free";
 
     @Override
@@ -79,7 +78,7 @@ public class GameDetailsActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        final DatabaseReference cartRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Cart List");
+        final DatabaseReference cartRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("gId", gameId);
@@ -112,7 +111,7 @@ public class GameDetailsActivity extends AppCompatActivity {
     }
 
     private void getGameDetails(String gameId) {
-        DatabaseReference gamesRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Videogames");
+        DatabaseReference gamesRef = FirebaseDatabase.getInstance().getReference().child("Videogames");
 
 
         gamesRef.child(gameId).addValueEventListener(new ValueEventListener() {
@@ -138,7 +137,7 @@ public class GameDetailsActivity extends AppCompatActivity {
 
     private void checkOrder(){
         DatabaseReference ordersRef;
-        ordersRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getUsername());
 
         ordersRef.addValueEventListener(new ValueEventListener() {
             @Override

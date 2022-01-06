@@ -44,7 +44,6 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private StorageReference productImageRef;
     private DatabaseReference productRef;
     private ProgressDialog loadingBar;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     private String storageUrl = "gs://justplay-ecom.appspot.com";
 
 
@@ -55,7 +54,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         consoleName = getIntent().getExtras().get("console").toString();
         productImageRef = FirebaseStorage.getInstance(storageUrl).getReference().child("Videogames Image");
-        productRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Videogames");
+        productRef = FirebaseDatabase.getInstance().getReference().child("Videogames");
 
         addNewProductButton = (Button) findViewById(R.id.add_new_game);
         inputProductImage = (ImageView) findViewById(R.id.select_game_image);

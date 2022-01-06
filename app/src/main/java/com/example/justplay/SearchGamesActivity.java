@@ -27,7 +27,6 @@ public class SearchGamesActivity extends AppCompatActivity {
     private EditText inputText;
     private RecyclerView searchList;
     private String searchInput;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class SearchGamesActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Videogames");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Videogames");
 
         FirebaseRecyclerOptions<Games> options = new FirebaseRecyclerOptions.Builder<Games>()
                 .setQuery(reference.orderByChild("gName").startAt(searchInput), Games.class)

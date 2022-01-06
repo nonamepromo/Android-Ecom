@@ -39,7 +39,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private DatabaseReference gamesRef;
     private RecyclerView recyclerView;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     RecyclerView.LayoutManager layoutManager;
 
     private String role = "";
@@ -55,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             role = getIntent().getExtras().get("Admin").toString();
         }
 
-        gamesRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Videogames");
+        gamesRef = FirebaseDatabase.getInstance().getReference().child("Videogames");
 
         //PER IL REMIND ME
         Paper.init(this);

@@ -23,7 +23,6 @@ public class AdminUserGamesActivity extends AppCompatActivity {
     private RecyclerView videogamesList;
     RecyclerView.LayoutManager layoutManager;
     private DatabaseReference cartListRef;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
     String userID = "";
 
     @Override
@@ -38,7 +37,7 @@ public class AdminUserGamesActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         videogamesList.setLayoutManager(layoutManager);
 
-        cartListRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Cart List").child("Admin View").child(userID).child("Games");
+        cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("Admin View").child(userID).child("Games");
     }
 
     @Override

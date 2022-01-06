@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     
     private String parentDbName = "Users";
     private CheckBox chkBoxRememberMe;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         final DatabaseReference rootRef;
-        rootRef = FirebaseDatabase.getInstance(firebaseUrl).getReference();
+        rootRef = FirebaseDatabase.getInstance().getReference();
 
         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

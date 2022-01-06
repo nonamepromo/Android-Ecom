@@ -32,7 +32,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private EditText nameEdit, phoneEdit;
     private TextView saveButton, closeButton;
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
 
     private String checkClick= "";
 
@@ -74,7 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Users");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put("name", nameEdit.getText().toString());
         userMap.put("phone", phoneEdit.getText().toString());
@@ -96,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void userInfoView(final EditText nameEdit, final EditText phoneEdit) {
-        DatabaseReference userRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Users").child(Prevalent.currentOnlineUser.getUsername());
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getUsername());
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override

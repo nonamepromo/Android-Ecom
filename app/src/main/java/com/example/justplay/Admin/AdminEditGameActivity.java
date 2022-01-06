@@ -25,7 +25,6 @@ import java.util.HashMap;
 
 public class AdminEditGameActivity extends AppCompatActivity {
 
-    private String firebaseUrl = "https://justplay-ecom-default-rtdb.europe-west1.firebasedatabase.app";
 
     private Button applyChange, deleteGame;
     private EditText title, description, price;
@@ -40,7 +39,7 @@ public class AdminEditGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_edit_game);
 
         gameId = getIntent().getStringExtra("gId");
-        gamesRef = FirebaseDatabase.getInstance(firebaseUrl).getReference().child("Videogames").child(gameId);
+        gamesRef = FirebaseDatabase.getInstance().getReference().child("Videogames").child(gameId);
 
         applyChange = findViewById(R.id.edit_apply_changes);
         deleteGame = findViewById(R.id.delete_game);
