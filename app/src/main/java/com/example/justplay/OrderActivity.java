@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.justplay.Prevalent.Prevalent;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
@@ -23,11 +26,13 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -54,7 +59,7 @@ public class OrderActivity extends AppCompatActivity {
         addressEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG,Place.Field.NAME);
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(OrderActivity.this);
                 startActivityForResult(intent,100);
             }
@@ -73,8 +78,17 @@ public class OrderActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK){
             Place place = Autocomplete.getPlaceFromIntent(data);
-            addressEditText.setText(place.getAddress());
-            cityEditText.setText(place.getName());
+            LatLng latLng = place.getLatLng();
+            double MyLat = latLng.latitude;
+            double MyLong = latLng.longitude;
+            Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(MyLat, MyLong, 1);
+                addressEditText.setText(place.getName());
+                cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (resultCode == AutocompleteActivity.RESULT_ERROR){
             Toast.makeText(getApplicationContext(), "Si è presentato un errore, ritenta più tardi", Toast.LENGTH_SHORT).show();
         }
