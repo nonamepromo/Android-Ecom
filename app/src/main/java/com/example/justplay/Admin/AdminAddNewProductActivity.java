@@ -44,7 +44,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private StorageReference productImageRef;
     private DatabaseReference productRef;
     private ProgressDialog loadingBar;
-    private String storageUrl = "gs://justplay-ecom.appspot.com";
+    private String storageUrl = "gs://androidecom-7b1c1.appspot.com";
 
 
     @Override
