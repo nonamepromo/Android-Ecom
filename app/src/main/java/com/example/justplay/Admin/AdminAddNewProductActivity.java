@@ -53,7 +53,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
     private DatabaseReference productRef;
     private ProgressDialog loadingBar;
     private String storageUrl = "gs://androidecom-7b1c1.appspot.com";
-    private int STORAGE_PERMISSION_CODE = 1;
+    private static final int STORAGE_PERMISSION_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,9 +154,7 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()){
                             downloadImageUrl = task.getResult().toString();
-
                             Toast.makeText(AdminAddNewProductActivity.this, "Immagine salvata con successo!", Toast.LENGTH_SHORT).show();
-                            
                             saveProductInfoToDatabase();
                         }
                     }
@@ -182,7 +180,6 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     Intent intent = new Intent(AdminAddNewProductActivity.this, AdminCategoryActivity.class);
                     startActivity(intent);
-
                     loadingBar.dismiss();
                     Toast.makeText(AdminAddNewProductActivity.this, "Videogioco aggiunto con successo!", Toast.LENGTH_SHORT).show();
                 } else {

@@ -1,6 +1,7 @@
 package com.example.justplay.ViewHolder;
 
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.example.justplay.R;
 public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public TextView gameTitle, gameDescription, gamePrice, gameConsole;
     public ImageView imageView;
+    public CheckBox wishedGame;
     public ItemClickListener listener;
 
     public GameViewHolder(@NonNull View itemView) {
@@ -23,6 +25,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         gameDescription = (TextView) itemView.findViewById(R.id.game_description);
         gamePrice = (TextView) itemView.findViewById(R.id.game_price);
         gameConsole = (TextView) itemView.findViewById(R.id.game_console);
+        wishedGame = (CheckBox) itemView.findViewById(R.id.add_wishlist);
     }
 
     public void setItemClickListener (ItemClickListener listener){

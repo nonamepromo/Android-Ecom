@@ -3,8 +3,14 @@ package com.example.justplay;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -14,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.justplay.Admin.AdminAddNewProductActivity;
 import com.example.justplay.Prevalent.Prevalent;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,8 +44,10 @@ import java.util.Locale;
 public class OrderActivity extends AppCompatActivity {
 
     private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
-    private Button confirmOrder;
+    private Button confirmOrder, selectPosition;
     private String totalAmount = "";
+    private static final int MAPS_PERMISSION_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +57,7 @@ public class OrderActivity extends AppCompatActivity {
         totalAmount = getIntent().getStringExtra("Prezzo Totale");
         Toast.makeText(this, "Prezzo Totale = " + totalAmount + "€", Toast.LENGTH_SHORT).show();
 
+        selectPosition = (Button) findViewById(R.id.select_position);
         confirmOrder = (Button) findViewById(R.id.confirm_order_btn);
         nameEditText = (EditText) findViewById(R.id.shipment_name);
         phoneEditText = (EditText) findViewById(R.id.shipment_phone);
@@ -65,12 +75,63 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+        selectPosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenMaps();
+            }
+        });
+
         confirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 check();
             }
         });
+    }
+
+    private void OpenMaps() {
+        if (ContextCompat.checkSelfPermission(OrderActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
+            startActivity(intent);
+        } else {
+            requestMapsPermission();
+        }
+    }
+
+    private void requestMapsPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            new AlertDialog.Builder(this).setTitle("Permesso richiesto").setMessage("Questo permesso è necessario per riempire i campi per la spedizione utilizzando la tua posizione")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(OrderActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAPS_PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAPS_PERMISSION_CODE);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MAPS_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                OpenMaps();
+            } else {
+                Toast.makeText(this, "Permesso negato", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

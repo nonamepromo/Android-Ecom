@@ -7,7 +7,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -39,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private DatabaseReference gamesRef;
     private RecyclerView recyclerView;
+    private DBHandler dbHandler;
     RecyclerView.LayoutManager layoutManager;
 
     private String role = "";
@@ -47,6 +50,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // creating a new dbhandler class and passing our context to it.
+        dbHandler = new DBHandler(HomeActivity.this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -129,6 +135,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                 });
+
+                CheckBox wishlist = gameViewHolder.wishedGame;
+                wishlist.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!role.equals("Admin")){
+
+                            String gameName = gameViewHolder.gameTitle.getText().toString() ;
+                            String gameConsole = gameViewHolder.gameConsole.getText().toString();
+                            String gamePrice = gameViewHolder.gamePrice.getText().toString();
+
+                            dbHandler.addNewFavorite(gameName, gameConsole, gamePrice);
+
+                            Toast.makeText(HomeActivity.this, "Gioco aggiunto alla wishlist", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
 
             @NonNull
@@ -179,6 +202,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else  if (id == R.id.nav_search){
             if (!role.equals("Admin")) {
                 Intent intent = new Intent(HomeActivity.this, SearchGamesActivity.class);
+                startActivity(intent);
+            }
+        } else  if (id == R.id.nav_wishlist){
+            if (!role.equals("Admin")) {
+                Intent intent = new Intent(HomeActivity.this, WishlistActivity.class);
                 startActivity(intent);
             }
         } else  if (id == R.id.nav_settings){
