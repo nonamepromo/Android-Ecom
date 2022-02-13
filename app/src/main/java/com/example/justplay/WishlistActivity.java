@@ -34,7 +34,7 @@ public class WishlistActivity extends AppCompatActivity {
 
         // getting our course array
         // list from db handler class.
-        wishedModalArrayList = dbHandler.readCourses();
+        wishedModalArrayList = dbHandler.readWishedGame();
 
         // on below line passing our array lost to our adapter class.
         wishlistViewHolder = new WishlistViewHolder(wishedModalArrayList, WishlistActivity.this);
