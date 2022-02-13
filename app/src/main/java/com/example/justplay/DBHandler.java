@@ -71,7 +71,7 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<Wished> readCourses() {
+    public ArrayList<Wished> readWishedGame() {
         // on below line we are creating a database for reading our database.
         SQLiteDatabase db = this.getReadableDatabase();
 
