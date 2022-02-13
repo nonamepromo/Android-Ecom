@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 
 public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.ViewHolder> {
 
-
-
     // variable for our array list and context
     private ArrayList<Wished> wishedModalArrayList;
     private Context context;
@@ -32,9 +31,8 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // on below line we are inflating our layout
-        // file for our recycler view items.
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout, parent, false);
+        // on below line we are inflating our layout file for our recycler view items.
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wishlist_items_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -62,9 +60,10 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our text views
-            gameName = itemView.findViewById(R.id.cart_game_title);
-            gameConsole = itemView.findViewById(R.id.cart_game_console);
-            gamePrice = itemView.findViewById(R.id.cart_game_price);
+
+            gameName = itemView.findViewById(R.id.wishlist_game_title);
+            gameConsole = itemView.findViewById(R.id.wishlist_game_console);
+            gamePrice = itemView.findViewById(R.id.wishlist_game_price);
         }
     }
 }

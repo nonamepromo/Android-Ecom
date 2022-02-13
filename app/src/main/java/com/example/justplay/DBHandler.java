@@ -56,7 +56,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteCourse(String wishedTitle) {
+    public void deleteWishedGame(String wishedTitle) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 

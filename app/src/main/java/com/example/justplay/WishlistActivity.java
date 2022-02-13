@@ -4,7 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.justplay.Model.Wished;
 import com.example.justplay.ViewHolder.WishlistViewHolder;
@@ -41,5 +46,19 @@ public class WishlistActivity extends AppCompatActivity {
 
         // setting our adapter to recycler view.
         recyclerView.setAdapter(wishlistViewHolder);
+
+        //Da sistemare
+        String wishedName = getIntent().getStringExtra("name");
+        Button deleteWished = findViewById(R.id.delete_wished_game);
+        deleteWished.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // calling a method to delete our course.
+                dbHandler.deleteWishedGame(wishedName);
+                Toast.makeText(WishlistActivity.this, "Videogioco eliminato", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(WishlistActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
