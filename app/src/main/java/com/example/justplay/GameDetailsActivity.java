@@ -60,15 +60,6 @@ public class GameDetailsActivity extends AppCompatActivity {
                 }
             }
         });
-
-        FloatingActionButton addToWishlist = (FloatingActionButton) findViewById(R.id.addToWishlist);
-        addToWishlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GameDetailsActivity.this, WishlistActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

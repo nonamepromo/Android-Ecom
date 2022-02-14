@@ -1,5 +1,6 @@
 package com.example.justplay;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.justplay.Admin.AdminEditGameActivity;
 import com.example.justplay.Model.Games;
+import com.example.justplay.Model.Wished;
 import com.example.justplay.Prevalent.Prevalent;
 import com.example.justplay.ViewHolder.GameViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -33,6 +35,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -135,8 +139,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                 });
-
                 CheckBox wishlist = gameViewHolder.wishedGame;
+                String gameName = gameViewHolder.gameTitle.getText().toString() ;
+
+                if (!dbHandler.checkWished(gameName)){
+                    gameViewHolder.wishedGame.setChecked(true);
+                }
                 wishlist.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -146,9 +154,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             String gameConsole = gameViewHolder.gameConsole.getText().toString();
                             String gamePrice = gameViewHolder.gamePrice.getText().toString();
 
-                            dbHandler.addNewFavorite(gameName, gameConsole, gamePrice);
-
-                            Toast.makeText(HomeActivity.this, "Gioco aggiunto alla wishlist", Toast.LENGTH_SHORT).show();
+                            if (dbHandler.addNewFavorite(gameName, gameConsole, gamePrice)){
+                                Toast.makeText(HomeActivity.this, "Gioco aggiunto alla wishlist", Toast.LENGTH_SHORT).show();
+                            }else {
+                                dbHandler.deleteWishedGame(gameName);
+                                Toast.makeText(HomeActivity.this, "Gioco rimosso dalla wishlist", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });

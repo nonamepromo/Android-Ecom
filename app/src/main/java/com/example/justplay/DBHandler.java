@@ -41,19 +41,42 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public void addNewFavorite(String gameName, String gameConsole, String gamePrice) {
+    public boolean addNewFavorite(String gameName, String gameConsole, String gamePrice) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + NAME_COL + " = '" + gameName + "'";
+        Cursor c = db.rawQuery(query, null);
+        if (c.moveToFirst()) {
+            c.close();
+            return false;
+        }else {
+            ContentValues values = new ContentValues();
 
-        values.put(NAME_COL, gameName);
-        values.put(CONSOLE_COL, gameConsole);
-        values.put(PRICE_COL, gamePrice);
+            values.put(NAME_COL, gameName);
+            values.put(CONSOLE_COL, gameConsole);
+            values.put(PRICE_COL, gamePrice);
 
-        db.insert(TABLE_NAME, null, values);
+            db.insert(TABLE_NAME, null, values);
 
-        db.close();
+            db.close();
+        c.close();
+        return true;
+        }
+    }
+
+    public boolean checkWished(String gameName){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + NAME_COL + " = '" + gameName + "'";
+        Cursor c = db.rawQuery(query, null);
+        if (c.moveToFirst()) {
+            c.close();
+            return false;
+        }else {
+            c.close();
+            return true;
+        }
     }
 
     public void deleteWishedGame(String wishedTitle) {

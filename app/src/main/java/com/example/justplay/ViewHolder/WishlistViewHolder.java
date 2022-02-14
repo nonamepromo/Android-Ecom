@@ -1,19 +1,22 @@
 package com.example.justplay.ViewHolder;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.justplay.DBHandler;
+import com.example.justplay.HomeActivity;
 import com.example.justplay.Model.Wished;
 import com.example.justplay.R;
-import com.example.justplay.WishlistActivity;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,7 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
     // variable for our array list and context
     private ArrayList<Wished> wishedModalArrayList;
     private Context context;
+    private DBHandler dbHandler;
 
     public WishlistViewHolder(ArrayList<Wished> wishedModalArrayList, Context context) {
         this.wishedModalArrayList = wishedModalArrayList;
@@ -43,6 +47,32 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
         holder.gameConsole.setText(modal.getGameConsole());
         holder.gamePrice.setText(modal.getGamePrice());
 
+        dbHandler = new DBHandler(context);
+
+        //Da sistemare
+        String wishedName = modal.getGameName();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharSequence options[] = new CharSequence[]{
+                        "Rimuovi"
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Opzioni Wishlist:");
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        if (i == 0){
+                            dbHandler.deleteWishedGame(wishedName);
+                            Toast.makeText(context, "Videogioco eliminato", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, HomeActivity.class);
+                            context.startActivity(intent);
+                        }
+                    }
+                });builder.show();
+            }
+        });
 
     }
 

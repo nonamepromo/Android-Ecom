@@ -48,17 +48,6 @@
             android:textSize="14dp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/delete_wished_game"
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="X"
-            android:textAllCaps="false" />
-
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

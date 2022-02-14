@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.justplay.Model.Wished;
@@ -22,18 +23,26 @@ public class WishlistActivity extends AppCompatActivity {
     private ArrayList<Wished> wishedModalArrayList;
     private DBHandler dbHandler;
     private WishlistViewHolder wishlistViewHolder;
+    private TextView closeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
 
+        closeButton = (TextView) findViewById(R.id.close_wishlist_btn);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         // initializing our all variables.
         wishedModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(WishlistActivity.this);
 
-        // getting our course array
-        // list from db handler class.
+        // getting our course array list from db handler class.
         wishedModalArrayList = dbHandler.readWishedGame();
 
         // on below line passing our array lost to our adapter class.
@@ -46,19 +55,5 @@ public class WishlistActivity extends AppCompatActivity {
 
         // setting our adapter to recycler view.
         recyclerView.setAdapter(wishlistViewHolder);
-
-        //Da sistemare
-        String wishedName = getIntent().getStringExtra("name");
-        Button deleteWished = findViewById(R.id.delete_wished_game);
-        deleteWished.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // calling a method to delete our course.
-                dbHandler.deleteWishedGame(wishedName);
-                Toast.makeText(WishlistActivity.this, "Videogioco eliminato", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(WishlistActivity.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
     }
 }
