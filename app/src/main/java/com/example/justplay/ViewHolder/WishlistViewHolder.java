@@ -45,7 +45,6 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
         Wished modal = wishedModalArrayList.get(position);
         holder.gameName.setText(modal.getGameName());
         holder.gameConsole.setText(modal.getGameConsole());
-        holder.gamePrice.setText(modal.getGamePrice());
 
         dbHandler = new DBHandler(context);
 
@@ -85,7 +84,7 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our text views.
-        private TextView gameName, gameConsole, gamePrice;
+        private TextView gameName, gameConsole;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -93,7 +92,6 @@ public class WishlistViewHolder extends RecyclerView.Adapter<WishlistViewHolder.
 
             gameName = itemView.findViewById(R.id.wishlist_game_title);
             gameConsole = itemView.findViewById(R.id.wishlist_game_console);
-            gamePrice = itemView.findViewById(R.id.wishlist_game_price);
         }
     }
 }

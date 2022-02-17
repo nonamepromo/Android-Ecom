@@ -4,7 +4,6 @@ public class Wished {
 
     private String gameName;
     private String gameConsole;
-    private String gamePrice;
     private int id;
 
     public Wished(){
@@ -26,14 +25,6 @@ public class Wished {
         this.gameConsole = gameConsole;
     }
 
-    public String getGamePrice() {
-        return gamePrice;
-    }
-
-    public void setGamePrice(String gamePrice) {
-        this.gamePrice = gamePrice;
-    }
-
     public int getId() {
         return id;
     }
@@ -45,7 +36,6 @@ public class Wished {
     public Wished(String gameName, String gameConsole, String gamePrice) {
         this.gameName = gameName;
         this.gameConsole = gameConsole;
-        this.gamePrice = gamePrice;
     }
 
 }

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.justplay.Admin.AdminAddNewProductActivity;
 import com.example.justplay.Prevalent.Prevalent;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,9 +47,10 @@ import java.util.Locale;
 public class OrderActivity extends AppCompatActivity {
 
     private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
-    private Button confirmOrder, selectPosition;
+    private Button confirmOrder, selectPosition, getPosition;
     private String totalAmount = "";
     private static final int MAPS_PERMISSION_CODE = 1;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
 
     @Override
@@ -58,11 +62,14 @@ public class OrderActivity extends AppCompatActivity {
         Toast.makeText(this, "Prezzo Totale = " + totalAmount + "€", Toast.LENGTH_SHORT).show();
 
         selectPosition = (Button) findViewById(R.id.select_position);
+        getPosition = (Button) findViewById(R.id.get_position);
         confirmOrder = (Button) findViewById(R.id.confirm_order_btn);
         nameEditText = (EditText) findViewById(R.id.shipment_name);
         phoneEditText = (EditText) findViewById(R.id.shipment_phone);
         addressEditText = (EditText) findViewById(R.id.shipment_address);
         cityEditText = (EditText) findViewById(R.id.shipment_city);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         Places.initialize(getApplicationContext(),"AIzaSyB_qaMUWfiUBQfxV4jJ2Q71RAQJWW6jOLY");
         addressEditText.setFocusable(false);
@@ -82,6 +89,13 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+        getPosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMapsPosition();
+            }
+        });
+
         confirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +109,31 @@ public class OrderActivity extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
             startActivity(intent);
+        } else {
+            requestMapsPermission();
+        }
+    }
+
+    private void getMapsPosition() {
+        if (ContextCompat.checkSelfPermission(OrderActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            addressEditText.setText(addresses.get(0).getAddressLine(0));
+                            cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            });
         } else {
             requestMapsPermission();
         }

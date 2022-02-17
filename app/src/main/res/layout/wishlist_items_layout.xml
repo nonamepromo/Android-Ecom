@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/buttons"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/wishlist_game_title"
@@ -31,19 +31,6 @@
             android:layout_marginRight="5dp"
             android:text="Game Console"
             android:textAlignment="viewEnd"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/wishlist_game_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/wishlist_game_console"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Game Price"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:textStyle="bold" />

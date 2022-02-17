@@ -41,7 +41,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(query);
     }
 
-    public boolean addNewFavorite(String gameName, String gameConsole, String gamePrice) {
+    public boolean addNewFavorite(String gameName, String gameConsole) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -55,7 +55,6 @@ public class DBHandler extends SQLiteOpenHelper {
 
             values.put(NAME_COL, gameName);
             values.put(CONSOLE_COL, gameConsole);
-            values.put(PRICE_COL, gamePrice);
 
             db.insert(TABLE_NAME, null, values);
 
