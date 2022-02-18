@@ -51,26 +51,10 @@
         android:minHeight="48dp" />
 
     <Button
-        android:id="@+id/select_position"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shipment_city"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/buttons"
-        android:text="Apri la mappa"
-        android:textColor="@color/white"
-        android:textSize="15dp" />
-
-    <Button
         android:id="@+id/get_position"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/shipment_city"
-        android:layout_alignParentEnd="true"
         android:layout_marginEnd="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
@@ -79,6 +63,7 @@
         android:textColor="@color/white"
         android:icon="@drawable/cart"
         android:textAlignment="center"
+        android:layout_centerInParent="true"
         android:text="Trova la mia posizione"
         android:textSize="15dp"/>
 
