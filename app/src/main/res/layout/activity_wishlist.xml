@@ -6,43 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".WishlistActivity">
 
-    <RelativeLayout
-        android:id="@+id/relative"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_settings"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/design_default_color_primary_dark"
-        android:layout_alignParentTop="true">
+        android:background="@color/design_default_color_primary">
 
-        <TextView
-            android:id="@+id/wishlist_title"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Wishlist"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/close_wishlist_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="19dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="15dp"
-            android:text="Chiudi"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+            <TextView
+                android:id="@+id/close_wishlist_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chiudi"
+                android:padding="2dp"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/wishlist_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Wishlist"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/wishlist_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relative"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_below="@+id/app_bar_settings"></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
