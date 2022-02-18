@@ -13,9 +13,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        android:text="Aggiungi un videogioco"
+        android:text="Seleziona una console per aggiungere un videogioco"
         android:textAlignment="center"
-        android:textSize="26sp"
+        android:textSize="20sp"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -67,7 +67,7 @@
         <ImageView
             android:id="@+id/xboxone"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="55dp"
             android:src="@drawable/xboxone"/>
     </LinearLayout>
 
@@ -86,7 +86,7 @@
         <ImageView
             android:id="@+id/xboxseriesx"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="55dp"
             android:src="@drawable/xboxseriesx" />
     </LinearLayout>
 

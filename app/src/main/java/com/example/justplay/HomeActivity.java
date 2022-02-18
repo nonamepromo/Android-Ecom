@@ -1,5 +1,6 @@
 package com.example.justplay;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -90,10 +90,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //MI PRENDO USERNAME UTENTE LOGGATO E IMMAGINE PER MOSTRARLO
+        //MI PRENDO USERNAME UTENTE LOGGATO
         View headerView = navigationView.getHeaderView(0);
         TextView usernameTextview = headerView.findViewById(R.id.user_profile_name);
-        CircleImageView profileImageView = headerView.findViewById(R.id.user_profile_image);
 
         if (!role.equals("Admin")) {
             usernameTextview.setText(Prevalent.currentOnlineUser.getName());
@@ -113,6 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         FirebaseRecyclerOptions<Games> options = new FirebaseRecyclerOptions.Builder<Games>().setQuery(gamesRef, Games.class).build();
         //PASSIAMO OPTION CHE CONTIENE LA QUERY
         FirebaseRecyclerAdapter<Games, GameViewHolder> adapter = new FirebaseRecyclerAdapter<Games, GameViewHolder>(options) {
+            @SuppressLint("SetTextI18n")
             @Override
             protected void onBindViewHolder(@NonNull GameViewHolder gameViewHolder, int i, @NonNull Games model) {
                 gameViewHolder.gameTitle.setText(model.getGname());
@@ -124,15 +124,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 gameViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent;
                         if (role.equals("Admin")){
-                            Intent intent = new Intent(HomeActivity.this, AdminEditGameActivity.class);
-                            intent.putExtra("gId", model.getGid());
-                            startActivity(intent);
+                            intent = new Intent(HomeActivity.this, AdminEditGameActivity.class);
                         }else {
-                            Intent intent = new Intent(HomeActivity.this, GameDetailsActivity.class);
-                            intent.putExtra("gId", model.getGid());
-                            startActivity(intent);
+                            intent = new Intent(HomeActivity.this, GameDetailsActivity.class);
                         }
+                        intent.putExtra("gId", model.getGid());
+                        startActivity(intent);
                     }
                 });
                 CheckBox wishlist = gameViewHolder.wishedGame;
@@ -164,8 +163,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_items_layout, parent, false);
-                GameViewHolder holder = new GameViewHolder(view);
-                return holder;
+                return new GameViewHolder(view);
             }
         };
     recyclerView.setAdapter(adapter);
@@ -174,7 +172,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
