@@ -104,16 +104,6 @@ public class OrderActivity extends AppCompatActivity {
         });
     }
 
-    private void OpenMaps() {
-        if (ContextCompat.checkSelfPermission(OrderActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
-            startActivity(intent);
-        } else {
-            requestMapsPermission();
-        }
-    }
-
     private void getMapsPosition() {
         if (ContextCompat.checkSelfPermission(OrderActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -122,11 +112,11 @@ public class OrderActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     if (location != null) {
-                        Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
                         try {
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            addressEditText.setText(addresses.get(0).getAddressLine(0));
-                            cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
+                        Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        addressEditText.setText(addresses.get(0).getAddressLine(0));
+                        cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -157,7 +147,6 @@ public class OrderActivity extends AppCompatActivity {
                     .create().show();
         } else {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAPS_PERMISSION_CODE);
-
         }
     }
 
@@ -170,6 +159,17 @@ public class OrderActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Permesso negato", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+
+    private void OpenMaps() {
+        if (ContextCompat.checkSelfPermission(OrderActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
+            startActivity(intent);
+        } else {
+            requestMapsPermission();
         }
     }
 
