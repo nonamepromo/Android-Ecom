@@ -37,6 +37,10 @@
             android:name=".WishlistActivity"
             android:exported="false" />
         <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
             android:name=".Admin.AdminEditGameActivity"
             android:exported="false" />
         <activity

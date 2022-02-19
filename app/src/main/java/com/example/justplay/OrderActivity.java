@@ -47,7 +47,7 @@ import java.util.Locale;
 public class OrderActivity extends AppCompatActivity {
 
     private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
-    private Button confirmOrder, selectPosition, getPosition;
+    private Button confirmOrder, getPosition;
     private String totalAmount = "";
     private static final int MAPS_PERMISSION_CODE = 1;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -61,7 +61,6 @@ public class OrderActivity extends AppCompatActivity {
         totalAmount = getIntent().getStringExtra("Prezzo Totale");
         Toast.makeText(this, "Prezzo Totale = " + totalAmount + "€", Toast.LENGTH_SHORT).show();
 
-        selectPosition = (Button) findViewById(R.id.select_position);
         getPosition = (Button) findViewById(R.id.get_position);
         confirmOrder = (Button) findViewById(R.id.confirm_order_btn);
         nameEditText = (EditText) findViewById(R.id.shipment_name);
@@ -79,13 +78,6 @@ public class OrderActivity extends AppCompatActivity {
                 List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(OrderActivity.this);
                 startActivityForResult(intent,100);
-            }
-        });
-
-        selectPosition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OpenMaps();
             }
         });
 
@@ -155,21 +147,10 @@ public class OrderActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == MAPS_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                OpenMaps();
+                getMapsPosition();
             } else {
                 Toast.makeText(this, "Permesso negato", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-
-    private void OpenMaps() {
-        if (ContextCompat.checkSelfPermission(OrderActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
-            startActivity(intent);
-        } else {
-            requestMapsPermission();
         }
     }
 
