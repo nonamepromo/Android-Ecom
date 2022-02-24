@@ -49,6 +49,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull AdminOrdersViewHolder adminOrdersViewHolder, @SuppressLint("RecyclerView") final int i, @NonNull AdminOrders adminOrdersModel) {
                 adminOrdersViewHolder.userName.setText("Nome: " + adminOrdersModel.getName());
+                adminOrdersViewHolder.userSurname.setText("Cognome: " + adminOrdersModel.getSurname());
                 adminOrdersViewHolder.userPhone.setText("Numero di telefono: " + adminOrdersModel.getPhone());
                 adminOrdersViewHolder.userTotal.setText("Totale = " + adminOrdersModel.getTotalAmount() + "€");
                 adminOrdersViewHolder.userDateTime.setText("Data e ora: " + adminOrdersModel.getDate() + " " + adminOrdersModel.getTime());
@@ -105,13 +106,14 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
     }
 
     public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{
-        public TextView userName, userPhone, userTotal, userDateTime, userShipping;
+        public TextView userName, userSurname, userPhone, userTotal, userDateTime, userShipping;
         public Button showOrdersButton;
 
         public AdminOrdersViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userName = itemView.findViewById(R.id.order_user_name);
+            userSurname = itemView.findViewById(R.id.order_user_surname);
             userPhone = itemView.findViewById(R.id.order_phone_number);
             userTotal = itemView.findViewById(R.id.order_total_price);
             userDateTime = itemView.findViewById(R.id.order_date_time);

@@ -27,6 +27,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -46,8 +47,8 @@ import java.util.Locale;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
-    private Button confirmOrder, getPosition;
+    private EditText nameEditText, surnameEditText, phoneEditText, addressEditText, cityEditText;
+    private Button confirmOrder, getPosition, getMappa;
     private String totalAmount = "";
     private static final int MAPS_PERMISSION_CODE = 1;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -62,22 +63,24 @@ public class OrderActivity extends AppCompatActivity {
         Toast.makeText(this, "Prezzo Totale = " + totalAmount + "€", Toast.LENGTH_SHORT).show();
 
         getPosition = (Button) findViewById(R.id.get_position);
+        getMappa = (Button) findViewById(R.id.get_test);
         confirmOrder = (Button) findViewById(R.id.confirm_order_btn);
         nameEditText = (EditText) findViewById(R.id.shipment_name);
+        surnameEditText = (EditText) findViewById(R.id.shipment_surname);
         phoneEditText = (EditText) findViewById(R.id.shipment_phone);
         addressEditText = (EditText) findViewById(R.id.shipment_address);
         cityEditText = (EditText) findViewById(R.id.shipment_city);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        Places.initialize(getApplicationContext(),"AIzaSyB_qaMUWfiUBQfxV4jJ2Q71RAQJWW6jOLY");
+        Places.initialize(getApplicationContext(), "AIzaSyB_qaMUWfiUBQfxV4jJ2Q71RAQJWW6jOLY");
         addressEditText.setFocusable(false);
         addressEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fieldList).build(OrderActivity.this);
-                startActivityForResult(intent,100);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(OrderActivity.this);
+                startActivityForResult(intent, 100);
             }
         });
 
@@ -85,6 +88,13 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getMapsPosition();
+            }
+        });
+
+        getMappa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMappaOpen();
             }
         });
 
@@ -105,10 +115,10 @@ public class OrderActivity extends AppCompatActivity {
                     Location location = task.getResult();
                     if (location != null) {
                         try {
-                        Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        addressEditText.setText(addresses.get(0).getAddressLine(0));
-                        cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
+                            Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            addressEditText.setText(addresses.get(0).getAddressLine(0));
+                            cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -116,6 +126,16 @@ public class OrderActivity extends AppCompatActivity {
 
                 }
             });
+        } else {
+            requestMapsPermission();
+        }
+    }
+
+    private void getMappaOpen() {
+        if (ContextCompat.checkSelfPermission(OrderActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
+            startActivity(intent);
         } else {
             requestMapsPermission();
         }
@@ -179,6 +199,8 @@ public class OrderActivity extends AppCompatActivity {
     private void check() {
         if (TextUtils.isEmpty(nameEditText.getText().toString())){
             Toast.makeText(this, "Per favore inserisci il tuo nome", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(surnameEditText.getText().toString())){
+            Toast.makeText(this, "Per favore inserisci il tuo cognome", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(phoneEditText.getText().toString())){
             Toast.makeText(this, "Per favore inserisci il tuo numero di telefono", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(addressEditText.getText().toString())){
@@ -205,6 +227,7 @@ public class OrderActivity extends AppCompatActivity {
         HashMap<String, Object> ordersMap = new HashMap<>();
         ordersMap.put("totalAmount", totalAmount);
         ordersMap.put("name", nameEditText.getText().toString());
+        ordersMap.put("surname", surnameEditText.getText().toString());
         ordersMap.put("phone", phoneEditText.getText().toString());
         ordersMap.put("address", addressEditText.getText().toString());
         ordersMap.put("city", cityEditText.getText().toString());

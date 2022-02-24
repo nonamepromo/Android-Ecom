@@ -30,10 +30,22 @@
         android:minHeight="48dp" />
 
     <EditText
-        android:id="@+id/shipment_phone"
+        android:id="@+id/shipment_surname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/shipment_name"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Il tuo cognome"
+        android:maxLength="15"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/shipment_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shipment_surname"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
@@ -66,6 +78,23 @@
         android:background="@drawable/buttons"
         android:icon="@drawable/cart"
         android:text="Trova la mia posizione"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/get_test"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/get_position"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/buttons"
+        android:icon="@drawable/cart"
+        android:text="Mappa"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="15dp" />

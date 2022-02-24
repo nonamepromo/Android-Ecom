@@ -14,7 +14,18 @@
             android:id="@+id/order_user_name"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="Nome"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/order_user_surname"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_user_name"
+            android:text="Cognome"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:layout_marginLeft="5dp"
@@ -44,7 +55,7 @@
             android:textStyle="bold"
             android:layout_below="@id/order_phone_number"
             android:gravity="center"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="30dp"/>
 
         <TextView
             android:id="@+id/order_address_city"

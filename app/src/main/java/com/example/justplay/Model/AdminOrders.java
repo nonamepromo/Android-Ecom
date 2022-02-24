@@ -1,13 +1,14 @@
 package com.example.justplay.Model;
 
 public class AdminOrders {
-    private String name, phone, address, city, state, date, time, totalAmount;
+    private String name, surname, phone, address, city, state, date, time, totalAmount;
 
     public AdminOrders(){
     }
 
-    public AdminOrders(String name, String phone, String address, String city, String state, String date, String time, String totalAmount) {
+    public AdminOrders(String name, String surname, String phone, String address, String city, String state, String date, String time, String totalAmount) {
         this.name = name;
+        this.surname = surname;
         this.phone = phone;
         this.address = address;
         this.city = city;
@@ -24,6 +25,10 @@ public class AdminOrders {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getSurname() { return surname; }
+
+    public void setSurname(String surname) { this.surname = surname; }
 
     public String getPhone() {
         return phone;

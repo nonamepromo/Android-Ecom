@@ -135,28 +135,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
                 CheckBox wishlist = gameViewHolder.wishedGame;
-                String gameName = gameViewHolder.gameTitle.getText().toString() ;
+                String gameName = gameViewHolder.gameTitle.getText().toString();
+                if (!role.equals("Admin")) {
+                    if (!dbHandler.checkWished(gameName)) {
+                        gameViewHolder.wishedGame.setChecked(true);
+                    }
+                    wishlist.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!role.equals("Admin")) {
 
-                if (!dbHandler.checkWished(gameName)){
-                    gameViewHolder.wishedGame.setChecked(true);
-                }
-                wishlist.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!role.equals("Admin")){
+                                String gameName = gameViewHolder.gameTitle.getText().toString();
+                                String gameConsole = gameViewHolder.gameConsole.getText().toString();
 
-                            String gameName = gameViewHolder.gameTitle.getText().toString() ;
-                            String gameConsole = gameViewHolder.gameConsole.getText().toString();
-
-                            if (dbHandler.addNewFavorite(gameName, gameConsole)){
-                                Toast.makeText(HomeActivity.this, "Gioco aggiunto alla wishlist", Toast.LENGTH_SHORT).show();
-                            }else {
-                                dbHandler.deleteWishedGame(gameName);
-                                Toast.makeText(HomeActivity.this, "Gioco rimosso dalla wishlist", Toast.LENGTH_SHORT).show();
+                                if (dbHandler.addNewFavorite(gameName, gameConsole)) {
+                                    Toast.makeText(HomeActivity.this, "Gioco aggiunto alla wishlist", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    dbHandler.deleteWishedGame(gameName);
+                                    Toast.makeText(HomeActivity.this, "Gioco rimosso dalla wishlist", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                } else {
+                    wishlist.setVisibility(View.INVISIBLE);
+                }
             }
 
             @NonNull
