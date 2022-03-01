@@ -48,7 +48,7 @@ import java.util.Locale;
 public class OrderActivity extends AppCompatActivity {
 
     private EditText nameEditText, surnameEditText, phoneEditText, addressEditText, cityEditText;
-    private Button confirmOrder, getPosition, getMappa;
+    private Button confirmOrder, getPosition;
     private String totalAmount = "";
     private static final int MAPS_PERMISSION_CODE = 1;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -63,7 +63,6 @@ public class OrderActivity extends AppCompatActivity {
         Toast.makeText(this, "Prezzo Totale = " + totalAmount + "€", Toast.LENGTH_SHORT).show();
 
         getPosition = (Button) findViewById(R.id.get_position);
-        getMappa = (Button) findViewById(R.id.get_test);
         confirmOrder = (Button) findViewById(R.id.confirm_order_btn);
         nameEditText = (EditText) findViewById(R.id.shipment_name);
         surnameEditText = (EditText) findViewById(R.id.shipment_surname);
@@ -91,13 +90,6 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-        getMappa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getMappaOpen();
-            }
-        });
-
         confirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +104,6 @@ public class OrderActivity extends AppCompatActivity {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
-                    //Location location = task.getResult();
                     if (location != null) {
                         try {
                             Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
@@ -125,17 +116,6 @@ public class OrderActivity extends AppCompatActivity {
                     }
                 }
             });
-        } else {
-            requestMapsPermission();
-        }
-    }
-
-
-    private void getMappaOpen() {
-        if (ContextCompat.checkSelfPermission(OrderActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(OrderActivity.this, MapsActivity.class);
-            startActivity(intent);
         } else {
             requestMapsPermission();
         }

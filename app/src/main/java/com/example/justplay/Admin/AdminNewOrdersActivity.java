@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private RecyclerView ordersList;
-    private DatabaseReference ordersRef;
+    private DatabaseReference ordersRef, cartListRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_new_orders);
 
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
+        cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List").child("Admin View");
         ordersList = findViewById(R.id.orders_list);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -58,7 +59,6 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                 adminOrdersViewHolder.showOrdersButton.setOnClickListener(v -> {
                     String uId = getRef(i).getKey();
                     Intent intent = new Intent(AdminNewOrdersActivity.this, AdminUserGamesActivity.class);
-                    //PRENDIAMO ID DELL'UTENTE E LO PASSIAMO POI NELL'ACTIVITI ADMIN USER GAMES, CHE POTRà RICHIAMARE QUESTA STRINGA UTILIZZANDO GETINTENT DI "UID" CHE è COME LO ABBIAMO CHIAMATO
                     intent.putExtra("uid", uId);
                     startActivity(intent);
                 });
@@ -103,6 +103,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
     private void removeOrder(String uId) {
         ordersRef.child(uId).removeValue();
+        cartListRef.child(uId).removeValue();
     }
 
     public static class AdminOrdersViewHolder extends RecyclerView.ViewHolder{

@@ -55,10 +55,14 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //MI PORTO IL VALORE TOTALE DEL CARRELLO NELL'ORDER ACTIVITY
-                Intent intent = new Intent(CartActivity.this, OrderActivity.class);
-                intent.putExtra("Prezzo Totale", String.valueOf(grandTotal));
-                startActivity(intent);
-                finish();
+                if (grandTotal != 0) {
+                    Intent intent = new Intent(CartActivity.this, OrderActivity.class);
+                    intent.putExtra("Prezzo Totale", String.valueOf(grandTotal));
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(CartActivity.this, "Devi prima aggiungere qualcosa al carrello!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -144,27 +148,13 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    String shipping = snapshot.child("state").getValue().toString();
-                    String user = snapshot.child("name").getValue().toString();
+                    totalAmount.setText("Il tuo ordine non è ancora stato spedito");
+                    recyclerView.setVisibility(View.GONE);
 
-                    if (shipping.equals("shipped")){
-                        totalAmount.setText("Caro " + user + "\n il tuo ordine è stato spedito!");
-                        recyclerView.setVisibility(View.GONE);
+                    confirmOrderMessage.setVisibility(View.VISIBLE);
+                    nextProcessBtn.setVisibility(View.GONE);
 
-                        confirmOrderMessage.setVisibility(View.VISIBLE);
-                        confirmOrderMessage.setText("Il tuo ordine è stato spedito con successo!");
-                        nextProcessBtn.setVisibility(View.GONE);
-
-                        Toast.makeText(CartActivity.this, "Puoi effettuare nuovi acquisti solo dopo che il tuo ordine precedente viene spedito!", Toast.LENGTH_SHORT).show();
-                    } else if (shipping.equals("not shipped")){
-                        totalAmount.setText("Il tuo ordine non è ancora stato spedito");
-                        recyclerView.setVisibility(View.GONE);
-
-                        confirmOrderMessage.setVisibility(View.VISIBLE);
-                        nextProcessBtn.setVisibility(View.GONE);
-
-                        Toast.makeText(CartActivity.this, "Puoi effettuare nuovi acquisti solo dopo che il tuo ordine precedente viene spedito!", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(CartActivity.this, "Puoi effettuare nuovi acquisti solo dopo che il tuo ordine precedente verrà spedito!", Toast.LENGTH_SHORT).show();
                 }
             }
 
