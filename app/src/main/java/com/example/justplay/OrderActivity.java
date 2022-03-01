@@ -109,27 +109,27 @@ public class OrderActivity extends AppCompatActivity {
     private void getMapsPosition() {
         if (ContextCompat.checkSelfPermission(OrderActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
+                public void onSuccess(Location location) {
+                    //Location location = task.getResult();
                     if (location != null) {
                         try {
                             Geocoder geocoder = new Geocoder(OrderActivity.this, Locale.getDefault());
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            addressEditText.setText(addresses.get(0).getAddressLine(0));
+                            addressEditText.setText(addresses.get(0).getThoroughfare() + " " + addresses.get(0).getSubThoroughfare() + " " + addresses.get(0).getSubAdminArea());
                             cityEditText.setText(addresses.get(0).getLocality() + " " + addresses.get(0).getPostalCode());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-
                 }
             });
         } else {
             requestMapsPermission();
         }
     }
+
 
     private void getMappaOpen() {
         if (ContextCompat.checkSelfPermission(OrderActivity.this,
