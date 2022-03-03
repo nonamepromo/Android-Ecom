@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -23,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.justplay.R;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
