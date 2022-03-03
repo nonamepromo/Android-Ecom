@@ -121,7 +121,7 @@ public class GameDetailsActivity extends AppCompatActivity {
                     Games games = snapshot.getValue(Games.class);
 
                     gameTitle.setText(games.getGname());
-                    gamePrice.setText(games.getPrice() + "€");
+                    gamePrice.setText(games.getPrice());
                     gameDescription.setText(games.getDescription());
                     gameConsole.setText(games.getConsole());
                     Picasso.get().load(games.getImage()).into(gameImage);

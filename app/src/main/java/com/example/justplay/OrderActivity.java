@@ -122,6 +122,7 @@ public class OrderActivity extends AppCompatActivity {
 
     private void requestMapsPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            //alert fragment
             new AlertDialog.Builder(this).setTitle("Permesso richiesto").setMessage("Questo permesso è necessario per riempire i campi per la spedizione utilizzando la tua posizione")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -137,6 +138,7 @@ public class OrderActivity extends AppCompatActivity {
                     })
                     .create().show();
         } else {
+            //activity launcher
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, MAPS_PERMISSION_CODE);
         }
     }
