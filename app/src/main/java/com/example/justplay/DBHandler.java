@@ -42,7 +42,6 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public boolean addNewFavorite(String gameName, String gameConsole) {
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + NAME_COL + " = '" + gameName + "'";
@@ -79,7 +78,6 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     public void deleteWishedGame(String wishedTitle) {
-
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_NAME, "name=?", new String[]{wishedTitle});

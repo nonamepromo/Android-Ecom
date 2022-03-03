@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             //QUESTO RISOLVE IL PROBLEMA CHE QUANDO SI SELEZIONAVA "RICORDATI DI ME", AL SECONDO ACCESSO ALL'APP
-                            //L'APPLICAZIONE CRASHAVA PERCHE' NON RIUSCIVA A PRENDERSI L'USERNAME DELL'UTENTE LOGGATO DA FAR VISUALIZZARE NELLA TOOLBAR
+                            //L'APPLICAZIONE CRASHAVA PERCHE' NON RIUSCIVA A PRENDERSI L'USERNAME DELL'UTENTE LOGGATO DA FARLO VISUALIZZARE NELLA TOOLBAR
                             Prevalent.currentOnlineUser = usersData;
                             startActivity(intent);
                         }else {

@@ -148,13 +148,16 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    totalAmount.setText("Il tuo ordine non è ancora stato spedito");
-                    recyclerView.setVisibility(View.GONE);
+                    String shipping = snapshot.child("state").getValue().toString();
+                    String user = snapshot.child("name").getValue().toString();
+                    if (shipping.equals("not shipped")) {
+                        totalAmount.setText("Il tuo ordine non è ancora stato spedito");
+                        recyclerView.setVisibility(View.GONE);
+                        confirmOrderMessage.setVisibility(View.VISIBLE);
+                        nextProcessBtn.setVisibility(View.GONE);
 
-                    confirmOrderMessage.setVisibility(View.VISIBLE);
-                    nextProcessBtn.setVisibility(View.GONE);
-
-                    Toast.makeText(CartActivity.this, "Puoi effettuare nuovi acquisti solo dopo che il tuo ordine precedente verrà spedito!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CartActivity.this, user + " puoi effettuare nuovi acquisti solo dopo che il tuo ordine precedente verrà spedito!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
