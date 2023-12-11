@@ -71,7 +71,7 @@ public class OrderActivity extends AppCompatActivity {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        Places.initialize(getApplicationContext(), "AIzaSyB_qaMUWfiUBQfxV4jJ2Q71RAQJWW6jOLY");
+        Places.initialize(getApplicationContext(), "Add Google API Key here");
         addressEditText.setFocusable(false);
         addressEditText.setOnClickListener(new View.OnClickListener() {
             @Override
